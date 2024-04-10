@@ -10,13 +10,8 @@ const Hero = () => {
       <nav className='flex justify-between items-center w-full mb-10 pt-3'>
         <img src={logo} alt='sumz_logo' className='w-28 object-contain' />
           
-            {isAuthenticated && (
-            <li>
-            <p>
-              {user.name}
-              </p>
-              </li>
-              )}
+            
+        
           
         {
           isAuthenticated ? (
@@ -39,7 +34,15 @@ const Hero = () => {
           className='black_btn'
         >
           Log In
+                
         </button>
+              {isAuthenticated && (
+            <li>
+            <p>
+              {user.name}
+              </p>
+              </li>
+              )}
             </li>
           )
         }
