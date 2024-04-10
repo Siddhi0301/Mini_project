@@ -39,6 +39,7 @@ const Hero = () => {
               {isAuthenticated && (
             <li>
             <p>
+              Welcome
               {user.name}
               </p>
               </li>
