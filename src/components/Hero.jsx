@@ -31,7 +31,7 @@ const Hero = () => {
               Log Out
             </button>
             {userName && (
-              <p className="user-name absolute right-2 bottom-1 text-sm font-medium">
+              <p className="user-name absolute left-2 down-4 text-sm font-medium">
                 {userName}
               </p>
             )}
