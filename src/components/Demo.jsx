@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-import { copy, linkIcon, loader, tick } from "../assets"; // Import other icons from assets
-import microphone from "../assets/microphone.svg"; // Import the microphone icon directly
-import stopIcon from "../assets/stopIcon.svg"; // Import the stop icon directly
+import { copy, linkIcon, loader, tick } from "../assets";
+import microphone from "../assets/microphone.svg";
+import stopIcon from "../assets/stopicon.svg";
+import shareIcon from "../assets/share.svg";
 import { useLazyGetSummaryQuery } from "../services/article";
 
 const Demo = () => {
@@ -12,14 +13,13 @@ const Demo = () => {
   });
   const [allArticles, setAllArticles] = useState([]);
   const [copied, setCopied] = useState("");
-  const [isSpeaking, setIsSpeaking] = useState(false); // State to track if text-to-speech is active
-  const [speechSynthesisInstance, setSpeechSynthesisInstance] = useState(null); // State to track the current speech synthesis instance
-  const [lastSpokenIndex, setLastSpokenIndex] = useState(0); // State to track the last spoken index
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [speechSynthesisInstance, setSpeechSynthesisInstance] = useState(null);
+  const [lastSpokenIndex, setLastSpokenIndex] = useState(0);
+  const [shareOptionsVisible, setShareOptionsVisible] = useState(false);
 
-  // RTK lazy query
   const [getSummary, { error, isFetching }] = useLazyGetSummaryQuery();
 
-  // Load data from localStorage on mount
   useEffect(() => {
     const articlesFromLocalStorage = JSON.parse(
       localStorage.getItem("articles")
@@ -44,14 +44,12 @@ const Demo = () => {
       const newArticle = { ...article, summary: data.summary };
       const updatedAllArticles = [newArticle, ...allArticles];
 
-      // update state and local storage
       setArticle(newArticle);
       setAllArticles(updatedAllArticles);
       localStorage.setItem("articles", JSON.stringify(updatedAllArticles));
     }
   };
 
-  // copy the url and toggle the icon for user feedback
   const handleCopy = (copyUrl) => {
     setCopied(copyUrl);
     navigator.clipboard.writeText(copyUrl);
@@ -64,16 +62,15 @@ const Demo = () => {
     }
   };
 
-  // Function to speak out the summary
   const speakSummary = () => {
     if (isSpeaking) {
-      // If speech synthesis is active, stop it
       speechSynthesisInstance.cancel();
       setIsSpeaking(false);
     } else {
-      // If speech synthesis is not active, start it or continue from the last spoken index
       const synthesis = window.speechSynthesis;
-      const utterance = new SpeechSynthesisUtterance(article.summary.slice(lastSpokenIndex));
+      const utterance = new SpeechSynthesisUtterance(
+        article.summary.slice(lastSpokenIndex)
+      );
       synthesis.speak(utterance);
       setIsSpeaking(true);
       setSpeechSynthesisInstance(synthesis);
@@ -87,9 +84,26 @@ const Demo = () => {
     }
   };
 
+  const shareSummary = () => {
+    setShareOptionsVisible(true);
+  };
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(article.summary);
+    setShareOptionsVisible(false);
+  };
+
+  const shareViaWhatsApp = () => {
+    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(
+      article.summary
+    )}`;
+    window.open(whatsappUrl, "_blank");
+
+    setShareOptionsVisible(false);
+  };
+
   return (
     <section className="mt-16 w-full max-w-xl">
-      {/* Search */}
       <div className="flex flex-col w-full gap-2">
         <form
           className="relative flex justify-center items-center"
@@ -100,12 +114,13 @@ const Demo = () => {
             alt="link-icon"
             className="absolute left-0 my-2 ml-3 w-5"
           />
-
           <input
             type="url"
             placeholder="Paste the article link"
             value={article.url}
-            onChange={(e) => setArticle({ ...article, url: e.target.value })}
+            onChange={(e) =>
+              setArticle({ ...article, url: e.target.value })
+            }
             onKeyDown={handleKeyDown}
             required
             className="url_input peer"
@@ -117,8 +132,6 @@ const Demo = () => {
             <p>↵</p>
           </button>
         </form>
-
-        {/* Browse History */}
         <div className="flex flex-col gap-1 max-h-60 overflow-y-auto">
           {allArticles.reverse().map((item, index) => (
             <div
@@ -126,7 +139,10 @@ const Demo = () => {
               onClick={() => setArticle(item)}
               className="link_card"
             >
-              <div className="copy_btn" onClick={() => handleCopy(item.url)}>
+              <div
+                className="copy_btn"
+                onClick={() => handleCopy(item.url)}
+              >
                 <img
                   src={copied === item.url ? tick : copy}
                   alt={copied === item.url ? "tick_icon" : "copy_icon"}
@@ -141,10 +157,13 @@ const Demo = () => {
         </div>
       </div>
 
-      {/* Display Result */}
       <div className="my-10 max-w-full flex justify-center items-center">
         {isFetching ? (
-          <img src={loader} alt="loader" className="w-20 h-20 object-contain" />
+          <img
+            src={loader}
+            alt="loader"
+            className="w-20 h-20 object-contain"
+          />
         ) : error ? (
           <p className="font-inter font-bold text-black text-center">
             Well, that wasn't supposed to happen...
@@ -163,21 +182,46 @@ const Demo = () => {
                 <p className="font-inter font-medium text-sm text-gray-700">
                   {article.summary}
                 </p>
-                {/* Microphone or stop icon for text-to-speech */}
-                {isSpeaking ? (
+
+                <div className="flex items-center">
+                  {isSpeaking ? (
+                    <img
+                      src={stopIcon}
+                      alt="stop"
+                      className="w-6 h-6 cursor-pointer"
+                      onClick={speakSummary}
+                    />
+                  ) : (
+                    <img
+                      src={microphone}
+                      alt="microphone"
+                      className="w-6 h-6 cursor-pointer"
+                      onClick={speakSummary}
+                    />
+                  )}
                   <img
-                    src={stopIcon}
-                    alt="stop"
-                    className="w-6 h-6 cursor-pointer"
-                    onClick={speakSummary}
+                    src={shareIcon}
+                    alt="share"
+                    className="w-6 h-6 cursor-pointer ml-2"
+                    onClick={shareSummary}
                   />
-                ) : (
-                  <img
-                    src={microphone}
-                    alt="microphone"
-                    className="w-6 h-6 cursor-pointer"
-                    onClick={speakSummary}
-                  />
+                </div>
+
+                {shareOptionsVisible && (
+                  <div className="flex gap-2 mt-2">
+                    <button
+                      className="share_option"
+                      onClick={copyToClipboard}
+                    >
+                      📋 Copy to Clipboard
+                    </button>
+                    <button
+                      className="share_option"
+                      onClick={shareViaWhatsApp}
+                    >
+                      📲 Share via WhatsApp
+                    </button>
+                  </div>
                 )}
               </div>
             </div>
