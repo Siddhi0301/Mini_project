@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { copy, linkIcon, loader, tick } from "../assets";
 import microphone from "../assets/microphone.svg";
 import stopicon from "../assets/stopicon.svg";
-import shareIcon from "../assets/share.svg";
+import share from "../assets/share.svg";
 import { useLazyGetSummaryQuery } from "../services/article";
 
 const Demo = () => {
