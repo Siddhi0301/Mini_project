@@ -3,8 +3,14 @@ import React, { useState, useEffect } from "react";
 import { copy, linkIcon, loader, tick } from "../assets";
 import { useLazyGetSummaryQuery } from "../services/article";
 import microphone from "../assets/microphone.svg";
+<<<<<<< HEAD
 import stopIcon from "../assets/stopicon.svg";
 import shareIcon from "../assets/share.svg";
+=======
+import stopicon from "../assets/stopicon.svg";
+import share from "../assets/share.svg";
+import { useLazyGetSummaryQuery } from "../services/article";
+>>>>>>> 26b522de26d2ddc287e44254c76d8241630e682f
 
 const Demo = () => {
   const [article, setArticle] = useState({
