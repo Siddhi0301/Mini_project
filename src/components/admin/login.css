@@ -1,0 +1,111 @@
+.login {
+  width: 40%;
+  background-color: #FFFACD; /* Lemon Chiffon */
+  background-image: linear-gradient(45deg, #FFFACD, #FFA07A); /* Faint Gradient */
+  padding: 20px;
+  margin: 2% 30%;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.login h1 {
+  color: #FF4500; /* Orange Red */
+}
+
+.login p {
+  color: #FF6347; /* Tomato */
+  margin-bottom: 15px;
+}
+
+.login a {
+  color: #FF6347; /* Tomato */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+label {
+  margin-left: 0px;
+  margin-bottom: 5px;
+  color: #FF6347; /* Tomato */
+}
+
+input {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #FF6347; /* Tomato */
+  border-radius: 4px;
+  box-sizing: border-box;
+  width: calc(100% - 30px); /* Adjusted width to accommodate the eye icon */
+}
+
+.password-input {
+  position: relative;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 15px; /* Adjust the distance from the right side */
+  cursor: pointer;
+  width: 20px; /* Adjust the size as needed */
+  height: 20px; /* Adjust the size as needed */
+  top: 70%;
+  transform: translateY(-50%);
+}
+
+button {
+  background-color: #FF4500; /* Orange Red */
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #FF6347; /* Tomato */
+}
+
+.error {
+  color: #ff0000;
+  margin-top: 10px;
+}
+
+.googleSignin {
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.googleSignin button {
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background-image: linear-gradient(45deg, rgba(255, 215, 0, 0.4), rgba(255, 69, 0, 0.4)); /* Faint Gradient */
+  border: 1px solid #FF6347; /* Tomato */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.googleSignin button:hover {
+  background-image: linear-gradient(45deg, rgba(255, 215, 0, 0.6), rgba(255, 69, 0, 0.6)); /* Slightly less faint gradient on hover */
+}
+
+.googleSignin button img {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
