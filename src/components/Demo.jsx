@@ -3,10 +3,10 @@ import React, { useState, useEffect } from "react";
 import { copy, linkIcon, loader, tick } from "../assets";
 import { useLazyGetSummaryQuery } from "../services/article";
 import microphone from "../assets/microphone.svg";
-import stopIcon from "../assets/stopicon.svg";
+import stopIcon from "../assets/stopIcon.svg";
 import shareIcon from "../assets/share.svg";
 
-import stopicon from "../assets/stopicon.svg";
+// import stopicon from "../assets/stopicon.svg";
 import share from "../assets/share.svg";
 
 
