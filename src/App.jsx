@@ -1,4 +1,4 @@
-import Hero from "./components/Hero";
+ import Hero from "./components/Hero";
 import Demo from "./components/Demo";
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
